@@ -1,8 +1,8 @@
-package net.http.try_approach
+package net.http.either
 
 import scala.util.{Try, Success, Failure}
-import net.service.try_approach.OrderService
-import OrderService.{NoOrderFoundErrorMessage, UpdateDbErrorMessage}
+import net.service.either.OrderService
+import OrderService._
 
 object HttpOrderService {
 
@@ -17,14 +17,9 @@ object HttpOrderService {
 	// Update the quantity of an Order by ID
 	def createItem(o: OrderRequest): HttpResponse = 
 		OrderService.update(o) match {
-			case Success(_) => Ok
-			case Failure(e) => createItemHelper(e)
+			case Right(_)               => Ok
+			case Left(NoOrderFound)     => BadRequest
+			case Left(DbUpdateError(t)) => InternalServerError
 		}
-
-	private def createItemHelper(t: Throwable): HttpResponse = {
-		if      (t.getMessage == NoOrderFoundErrorMessage) BadRequest
-		else if (t.getMessage == UpdateDbErrorMessage)     InternalServerError
-		else 	 										   InternalServerError
-	}
 
 }
