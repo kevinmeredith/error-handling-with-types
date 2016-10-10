@@ -1,11 +1,11 @@
-package net.service
+package net.service.exception
 
-object OrderSerivce {
+import net.http.exception.HttpOrderService.OrderRequest
+
+object OrderService {
 
 	val NoOrderFoundErrorMessage = "Did not find order - cannot update."
 	val UpdateDbErrorMessage     = "Failed to update order due to DB error."
-
-	import HttpOrderService.OrderRequest
 
 	// An Order that exists in the system, i.e. DB
 	case class Order(id: Long, quantity: Int)
@@ -14,13 +14,13 @@ object OrderSerivce {
 	//         RuntimeException on failure to find OrderRequest
 	def update(o: OrderRequest): Unit = {
 		get(o) match {
-			case Some(x) => updateHelper(o)
-			case None    => throw new RuntimeException(NoOrderFoundErrorMessage) 
+			case Some(oReq) => updateHelper(oReq)
+			case None       => throw new RuntimeException(NoOrderFoundErrorMessage) 
 		}
 	}
 
 	private def updateHelper(o: Order): Unit = 
 		throw new RuntimeException(UpdateDbErrorMessage)
 
-	private def get(o: Order): Option[Order] = ???
+	private def get(o: OrderRequest): Option[Order] = ???
 }

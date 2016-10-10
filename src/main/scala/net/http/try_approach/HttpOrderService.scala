@@ -1,9 +1,10 @@
-package net.http
+package net.http.try_approach
+
+import scala.util.{Try, Success, Failure}
+import net.service.try_approach.OrderService
+import OrderService.{NoOrderFoundErrorMessage, UpdateDbErrorMessage}
 
 object HttpOrderService {
-
-	import scala.util.{Try, Success, Failure}
-	import OrderSerivce.{NoOrderFoundErrorMessage, UpdateDbErrorMessage}
 
 	sealed trait HttpResponse 
 	case object Ok                  extends HttpResponse
@@ -15,7 +16,7 @@ object HttpOrderService {
 	// PUT /order/{id} 
 	// Update the quantity of an Order by ID
 	def createItem(o: OrderRequest): HttpResponse = 
-		Try { OrderService.update(item) } match {
+		OrderService.update(o) match {
 			case Success(_) => Ok
 			case Failure(e) => createItemHelper(e)
 		}
