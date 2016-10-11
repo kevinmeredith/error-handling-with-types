@@ -1,3 +1,4 @@
+```
 case class Person(name: String, age: Int, id: Long)
 
 trait UserRepository {
@@ -17,3 +18,4 @@ case object UserRepositoryTestImpl extends UserRepository {
 	override def get(id: Long): Option[Person] = 
 		None
 }
+```

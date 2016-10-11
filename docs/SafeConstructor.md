@@ -1,3 +1,4 @@
+```
 class SSN private (val value: Int)
 
 object SSN {
@@ -13,3 +14,4 @@ object NonEmptyString {
 }
 
 case class Person(name: NonEmptyString, birthday: java.time.LocalDate, ssn: SSN)
+```
