@@ -6,7 +6,7 @@ object TSAbstraction {
 	}
 
 	case object UserRepositoryImpl extends UserRepository {
-		override def get(id: Long): Option[Long] = {
+		override def get(id: Long): Option[Person] = {
 			// get connection to DB
 			// perform look up
 			// decode SQL DB Row into a Person
@@ -15,7 +15,6 @@ object TSAbstraction {
 	}
 
 	case object UserRepositoryTestImpl extends UserRepository {
-		override def get(id: Long): Option[Person] = 
-			None
+		override def get(id: Long): Option[Person] = ???
 	}
 }
